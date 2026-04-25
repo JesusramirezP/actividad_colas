@@ -1,19 +1,10 @@
-#from typing import List
-#from cliente import Cliente
 from tarifas import TARIFAS
 from usuario import Usuario
 from consultorio import Consultorio
 from valid_error_handling import validacion_cedula, validacion_nombre, validacion_telefono, validar_opcion_menu, validar_fecha, cant_intervenciones
-from display import titulo_a_mostrar, mostrar_menu_principal, titulo_a_mostrar_submenu, mostar_submenu_1, mostar_submenu_2, mostrar_submenu_3
+from display import titulo_a_mostrar, mostrar_menu_principal, titulo_a_mostrar_submenu, mostar_submenu_1, mostar_submenu_2, mostrar_submenu_3, fmt_cop
 
-consultorio = Consultorio()
-
-# ──────────────────────────────────────────────
-#  FUNCIÓN: Formato para moneda colombiana.
-# ──────────────────────────────────────────────
-
-def fmt_cop(valor: int) -> str:      
-    return f"${valor:,.0f}".replace(",", ".")
+consultorio = Consultorio()             #Inicializa Consultorio()
 
 
 # ──────────────────────────────────────────────
@@ -81,21 +72,21 @@ def registar_usuario():
     print(f"{'3. TOTAL':<35}: {fmt_cop(total_a_pagar):>10}")                                #Solo información en terminal de forma tabulada
 
     
-    usuario = Usuario()
-    usuario.cedula = cedula_usuario
-    usuario.nombre = nombre_usuario
-    usuario.telefono = telefono_usuario
-    usuario.tip_usuario = tipo_usuario
-    usuario.tip_atencion = tipo_atencion
-    usuario.cantidad = cant_procedimientos
-    usuario.prioridad = prioridad_atencion
-    usuario.valor_cita = valor_cita
-    usuario.valor_atencion = valor_atencion
-    usuario.total = total_a_pagar
-    usuario.cant_extraccion = numero_extracciones
-    consultorio.encolar_usuario(usuario)
-   
-    return                  
+    usuario = Usuario()                                         #Se crea usuario
+    usuario.cedula = cedula_usuario                             #Se guardan atrubutos del usuario
+    usuario.nombre = nombre_usuario                             #
+    usuario.telefono = telefono_usuario                         #
+    usuario.tip_usuario = tipo_usuario                          #
+    usuario.tip_atencion = tipo_atencion                        #
+    usuario.cantidad = cant_procedimientos                      #
+    usuario.prioridad = prioridad_atencion                      #
+    usuario.fecha = fecha_cita                                  #
+    usuario.valor_cita = valor_cita                             #
+    usuario.valor_atencion = valor_atencion                     #
+    usuario.total = total_a_pagar                               #
+    usuario.cant_extraccion = numero_extracciones               #
+    consultorio.encolar_usuario(usuario)                        #Va a la funcion usuario en la funcion "encolar_usuario" en el modulo consultorio.py
+    return                                                      #Retorna al menu
 
    
     
@@ -112,16 +103,18 @@ def menu():
         mostrar_menu_principal()                                    #Mostrar menu principal en el terminal desde el modulo display.py
         
         opcion = input("Ingrese una oipción: ")                     #Captura dato para seleccionar la opcion a trabajar
-        if opcion == "1":
-            registar_usuario()
-        if opcion == "2":
-            consultorio.atender_siguiente_usuario()
-        if opcion == "3":
-            consultorio.consultar_siguiente_usuario()
-        if opcion == "4":
-            consultorio.estadistica_de_usuarios()
-        if opcion == "5":
-            ciclo_menu = False                            #Fin del programa
+        if opcion == "1":                                           #Se verifica si es la opcion 1
+            registar_usuario()                                      #Va a la funcion "egistrar_usuario" la cual esta dentro de este modulo main.py
+        if opcion == "2":                                           #Se verifica si es la opcion 2
+            consultorio.mostrar_usuarios_pendientes_ordenados()     #Va a la funcion "mostrar_usuarios_pendientes_ordenados" la cual esta dentro del modulo consultorio.py
+        if opcion == "3":                                           #Se verifica si es la opcion 2
+            consultorio.atender_siguiente_usuario()                 #Va a la funcion "atender_siguiente_usuario" la cual esta dentro del modulo consultorio.py
+        if opcion == "4":                                           #Se verifica si es la opcion 2
+            consultorio.consultar_siguiente_usuario()               #Va a la funcion "consultar_siguiente_usuario" la cual esta dentro del modulo consultorio.py
+        if opcion == "5":                                           #Se verifica si es la opcion 2
+            consultorio.estadistica_de_usuarios()                   #Va a la funcion "estadistica_de_usuarios" la cual esta dentro del modulo consultorio.py
+        if opcion == "6":                                           #Se verifica si es la opcion 2
+            ciclo_menu = False                                      #Fin del programa
 
 
 

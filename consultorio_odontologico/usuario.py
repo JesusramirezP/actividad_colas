@@ -1,15 +1,16 @@
 
 
-class   Usuario:
-    cedula : int
-    nombre : str
-    telefono: int
-    tip_usuario: str
-    tip_atencion: str
-    cantidad : int
-    prioridad : int
-    fecha : str
-    valor_cita : int
-    valor_atencion: int
-    total: int
-    cant_extraccion: int
+class Usuario:
+    def __init__(self):
+        self.cedula: int = 0
+        self.nombre: str = ""
+        self.telefono: int = 0
+        self.tip_usuario: str = ""
+        self.tip_atencion: str = ""
+        self.cantidad: int = 0
+        self.prioridad: int = 0
+        self.fecha: str = ""
+        self.valor_cita: int = 0
+        self.valor_atencion: int = 0
+        self.total: int = 0
+        self.cant_extraccion: int = 0
