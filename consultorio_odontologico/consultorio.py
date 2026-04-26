@@ -12,46 +12,46 @@ class Consultorio:                          #Se crea la clase Consultorio (el mo
     cola_usuario_general = deque()
     
 
-    def ordenar_cola(self, cola: deque) -> deque:
-        return deque(sorted(cola, key=lambda x: datetime.strptime(x.fecha, "%d/%m/%Y")))
+    def ordenar_cola(self, cola: deque) -> deque:                                                   #Funcion para ordenar las colas
+        return deque(sorted(cola, key=lambda x: datetime.strptime(x.fecha, "%d/%m/%Y")))            #Se ordena colas en base a la fecha, de la las cercana a la mas lejana
 
 
-    def encolar_usuario(self, usuario:Usuario):                         
+    def encolar_usuario(self, usuario:Usuario):                                                     #funcion pra encolar usuario
         if usuario.prioridad == "2"                                         :                       #Se verifica que sea urgente(2) y ademas si tiene extraccion, el usuario se almacene en esta cola
             self.cola_usuario_urgente.append(usuario)                                               #Se agrega usuario a la cola urgente
-            self.cola_usuario_urgente = self.ordenar_cola(self.cola_usuario_urgente)
+            self.cola_usuario_urgente = self.ordenar_cola(self.cola_usuario_urgente)                #Se ordena la cola en base a la fecha, se usa la funcion "ordenar_cola" ubicada en el modulo consultorio.py
             return
 
         elif usuario.tip_atencion == "Extracción":                                                  #Se verifica si el usuario tiene extracciones
             self.cola_usuario_extracciones.append(usuario)                                          #Se agrega usuario a la cola extraccion
-            self.cola_usuario_extracciones = self.ordenar_cola(self.cola_usuario_extracciones)
+            self.cola_usuario_extracciones = self.ordenar_cola(self.cola_usuario_extracciones)      #Se ordena la cola en base a la fecha, se usa la funcion "ordenar_cola" ubicada en el modulo consultorio.py
             return
         else:
             self.cola_usuario_general.append(usuario)                                               #Se agrega usuario a la cola general
-            self.cola_usuario_general = self.ordenar_cola(self.cola_usuario_general)
+            self.cola_usuario_general = self.ordenar_cola(self.cola_usuario_general)                #Se ordena la cola en base a la fecha, se usa la funcion "ordenar_cola" ubicada en el modulo consultorio.py
             return
     
 
     def mostrar_usuarios_pendientes_ordenados(self):
-        titulo_a_mostrar("  LISTA DE USUARIOS.")
+        titulo_a_mostrar("  LISTA DE USUARIOS.")                                                    #Se imprime el mensaje
 
-        todos_los_usuarios = []
+        todos_los_usuarios = []                                                                     #se crea lista para tratar todas las colas
 
         # Recorre cola urgente
-        for usuario in self.cola_usuario_urgente:
-            todos_los_usuarios.append((usuario, "URGENTE"))
+        for usuario in self.cola_usuario_urgente:                                                   #Ciclo for para leer toda la cola "cola_usuario_urgente"
+            todos_los_usuarios.append((usuario, "URGENTE"))                                         #Se guardan todos los datos de la cola en la lista
 
         # Recorre cola extracciones
-        for usuario in self.cola_usuario_extracciones:
-            todos_los_usuarios.append((usuario, "EXTRACCIÓN"))
+        for usuario in self.cola_usuario_extracciones:                                              #Ciclo for para leer toda la cola "cola_usuario_extracciones"
+            todos_los_usuarios.append((usuario, "EXTRACCIÓN"))                                      #Se guardan todos los datos de la cola en la lista
 
         # Recorre cola general
-        for usuario in self.cola_usuario_general:
-            todos_los_usuarios.append((usuario, "GENERAL"))
+        for usuario in self.cola_usuario_general:                                                   #Ciclo for para leer toda la cola "cola_usuario_general"
+            todos_los_usuarios.append((usuario, "GENERAL"))                                         #Se guardan todos los datos de la cola en la lista
 
         # Verifica si hay usuarios
-        if not todos_los_usuarios:
-            print(f"\n** La lista de usuarios está vacía.")
+        if not todos_los_usuarios:                                                                  #Verifica si la cola esta vacia
+            print(f"\n** La lista de usuarios está vacía.")                                         #Se imprime el mensaje
             return
 
         # Ordena por fecha de más cercana a más lejana
@@ -68,67 +68,66 @@ class Consultorio:                          #Se crea la clase Consultorio (el mo
                 f"{fmt_cop(usuario.total):>12} {grupo:>12}")
 
 
-    def atender_usuario_urgente(self):
-        print("ok")
-        if self.cola_usuario_urgente:
-            usuario = self.cola_usuario_urgente.popleft()
+    def atender_usuario_urgente(self):                                                          #Funcion para atender en la cola "cola_usuario_urgente"
+        if self.cola_usuario_urgente:                                                           #Se verifica que no este vacia la cola
+            usuario = self.cola_usuario_urgente.popleft()                                       #Se atiende usuario y se saca de la cola
             print(f"En el consultorio se atiende al usuario: {usuario.nombre} "                 #Muestra en en el terminal el usuario que se esta atendiendo
                   f"con procedimiento de {usuario.tip_atencion} por {usuario.tip_usuario}") 
             return 
         else:
-            print(f"** No hay usuarios urgentes en cola.")                                                        #Mustra mensaje
+            print(f"** No hay usuarios urgentes en cola.")                                      #Mustra mensaje
             return
         
-    def atender_usuario_extraccion(self):
-        if self.cola_usuario_extracciones:
-            usuario = self.cola_usuario_extracciones.popleft()
+    def atender_usuario_extraccion(self):                                                       #Funcion para atender en la cola "cola_usuario_extracciones"
+        if self.cola_usuario_extracciones:                                                      #Se verifica que no este vacia la cola
+            usuario = self.cola_usuario_extracciones.popleft()                                  #Se atiende usuario y se saca de la cola
             print(f"En el consultorio se atiende al usuario: {usuario.nombre} "                 #Muestra en en el terminal el usuario que se esta atendiendo
                   f"con procedimiento de {usuario.tip_atencion} por {usuario.tip_usuario}") 
             return 
         else:
-            print(f"** No hay usuarios urgentes en cola.")                                                        #Mustra mensaje
+            print(f"** No hay usuarios urgentes en cola.")                                      #Mustra mensaje
             return
         
-    def atender_usuario_general(self):
-        if self.cola_usuario_general:
-            usuario = self.cola_usuario_general.popleft()
+    def atender_usuario_general(self):                                                          #Funcion para atender en la cola "cola_usuario_general"
+        if self.cola_usuario_general:                                                           #Se verifica que no este vacia la cola
+            usuario = self.cola_usuario_general.popleft()                                       #Se atiende usuario y se saca de la cola
             print(f"En el consultorio se atiende al usuario: {usuario.nombre} "                 #Muestra en en el terminal el usuario que se esta atendiendo
                   f"con procedimiento de {usuario.tip_atencion} por {usuario.tip_usuario}") 
             return 
         else:
-            print(f"** No hay usuarios urgentes en cola.")                                                        #Mustra mensaje
+            print(f"** No hay usuarios urgentes en cola.")                                      #Mustra mensaje
             return
         
 
-    def consultar_siguiente_usuario_urgente(self):
-        if self.cola_usuario_urgente:
-            usuario = self.cola_usuario_urgente[0]
-            print(f"** El siguiente usuario es: {usuario.nombre} "                          #Muestra en en el terminal el usuario que se va a atender
+    def consultar_siguiente_usuario_urgente(self):                                              #Funcion para consultar en la cola "cola_usuario_urgente"
+        if self.cola_usuario_urgente:                                                           #Se verifica que no este vacia la cola
+            usuario = self.cola_usuario_urgente[0]                                              #Se lee usuario en la posicion cero de la cola y se guarda dato
+            print(f"** El siguiente usuario es: {usuario.nombre} "                              #Muestra en en el terminal el usuario que se va a atender
                 f"con procedimiento de {usuario.tip_atencion} por {usuario.tip_usuario}") 
             return 
         else:
-            print(f"** No hay usuarios urgentes en cola.")                                                        #Mustra mensaje
+            print(f"** No hay usuarios urgentes en cola.")                                      #Mustra mensaje
             return
 
     
-    def consultar_siguiente_usuario_extraccion(self):
-        if self.cola_usuario_extracciones:
-            usuario = self.cola_usuario_extracciones[0]
-            print(f"** El siguiente usuario es: {usuario.nombre} "                          #Muestra en en el terminal el usuario que se va a atender
+    def consultar_siguiente_usuario_extraccion(self):                                           #Funcion para consultar en la cola "cola_usuario_extracciones"
+        if self.cola_usuario_extracciones:                                                      #Se verifica que no este vacia la cola
+            usuario = self.cola_usuario_extracciones[0]                                         #Se lee usuario en la posicion cero de la cola y se guarda dato
+            print(f"** El siguiente usuario es: {usuario.nombre} "                              #Muestra en en el terminal el usuario siguiente
                 f"con procedimiento de {usuario.tip_atencion} por {usuario.tip_usuario}") 
             return 
         else:
-            print(f"** No hay usuarios para extracción en cola.")                                                        #Mustra mensaje
+            print(f"** No hay usuarios para extracción en cola.")                               #Mustra mensaje
             return
     
-    def consultar_siguiente_usuario_general(self):
-        if self.cola_usuario_general:
-            usuario = self.cola_usuario_general[0]
-            print(f"** El siguiente usuario es: {usuario.nombre} "                          #Muestra en en el terminal el usuario que se va a atender
+    def consultar_siguiente_usuario_general(self):                                              #Funcion para consultar en la cola "cola_usuario_general"
+        if self.cola_usuario_general:                                                           #Se verifica que no este vacia la col
+            usuario = self.cola_usuario_general[0]                                              #Se lee usuario en la posicion cero de la cola y se guarda dato
+            print(f"** El siguiente usuario es: {usuario.nombre} "                              #Muestra en en el terminal el usuario siguiente
                 f"con procedimiento de {usuario.tip_atencion} por {usuario.tip_usuario}") 
             return 
         else:
-            print(f"** No hay usuarios general en cola.")                                                        #Mustra mensaje
+            print(f"** No hay usuarios general en cola.")                                       #Mustra mensaje
             return
 
     def estadistica_de_usuarios(self):
@@ -179,7 +178,7 @@ class Consultorio:                          #Se crea la clase Consultorio (el mo
         #Mustra la tabla de estadisticas del consultorio                                                       
         print(f"{'- Total usuarios urgentes pendientes es: ':<44}{total_usuarios_urgentes_pendientes :>10}")
         print(f"{'- Total usuarios por extrac pendientes es: ':<40}{total_usuarios_extracciones_pendientes:>11}")
-        print(f"{'- Total usuarios general es: ':<44}{total_usuarios_extracciones_pendientes:>10}")
+        print(f"{'- Total usuarios general es: ':<44}{total_usuarios_general_pendientes:>10}")
         print(f"{'- El total de usuarios pendientes es: ':<44}{total_usuarios_pendientes:>10}")
         print(f"{'- Numero de limpiezas a realizar es : ':<44}{numero_limpiezas_a_realizar:>10}")
         print(f"{'- Numero de calzas a realizar es: ':<44}{numero_de_calzas_a_realizar:>10}")
