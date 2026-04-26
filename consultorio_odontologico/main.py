@@ -2,7 +2,7 @@ from tarifas import TARIFAS
 from usuario import Usuario
 from consultorio import Consultorio
 from valid_error_handling import validacion_cedula, validacion_nombre, validacion_telefono, validar_opcion_menu, validar_fecha, cant_intervenciones
-from display import titulo_a_mostrar, mostrar_menu_principal, titulo_a_mostrar_submenu, mostar_submenu_1, mostar_submenu_2, mostrar_submenu_3, fmt_cop
+from display import titulo_a_mostrar, mostrar_menu_principal, titulo_a_mostrar_submenu, mostar_submenu_1, mostar_submenu_2, mostrar_submenu_3, fmt_cop, mostar_submenu_4
 
 consultorio = Consultorio()             #Inicializa Consultorio()
 
@@ -88,8 +88,33 @@ def registar_usuario():
     consultorio.encolar_usuario(usuario)                        #Va a la funcion usuario en la funcion "encolar_usuario" en el modulo consultorio.py
     return                                                      #Retorna al menu
 
+
+def atender_usuario():
+    titulo_a_mostrar("  ATENDER USUARIO.")                      #Mostrar titulo en terminal desde el modulo display.py
    
-    
+    titulo_a_mostrar_submenu("  Opción a atender.")         #Mostrar titulo del submenu en terminal desde el modulo display.py
+    mostar_submenu_4()                                        #Muestra submenu en el terminal desde el modulo display.py
+    atender = validar_opcion_menu(["1","2","3"])              #Se realiza proceso de captura  de la opcion del submenu en el modulo "valid_error_handling.py", se reutiliza funcion "validar_opcion_menu" 
+    if atender == "1":
+        consultorio.atender_usuario_urgente()     
+    elif atender == "2":
+        consultorio.atender_usuario_extraccion()                               
+    elif atender == "3":
+        consultorio.atender_usuario_general()
+
+
+def consultar_usuario():
+    titulo_a_mostrar("  CONSULTAR USUARIO.")                      #Mostrar titulo en terminal desde el modulo display.py
+   
+    titulo_a_mostrar_submenu("  Opción a consultar.")         #Mostrar titulo del submenu en terminal desde el modulo display.py
+    mostar_submenu_4()                                        #Muestra submenu en el terminal desde el modulo display.py
+    consultar = validar_opcion_menu(["1","2","3"])              #Se realiza proceso de captura  de la opcion del submenu en el modulo "valid_error_handling.py", se reutiliza funcion "validar_opcion_menu" 
+    if consultar == "1":
+        consultorio.consultar_siguiente_usuario_urgente()       
+    elif consultar == "2":
+        consultorio.consultar_siguiente_usuario_extraccion()                               
+    elif consultar == "3":
+        consultorio.consultar_siguiente_usuario_general()
 
 # ──────────────────────────────────────────────
 #  FUNCIÓN: menu
@@ -108,9 +133,9 @@ def menu():
         if opcion == "2":                                           #Se verifica si es la opcion 2
             consultorio.mostrar_usuarios_pendientes_ordenados()     #Va a la funcion "mostrar_usuarios_pendientes_ordenados" la cual esta dentro del modulo consultorio.py
         if opcion == "3":                                           #Se verifica si es la opcion 2
-            consultorio.atender_siguiente_usuario()                 #Va a la funcion "atender_siguiente_usuario" la cual esta dentro del modulo consultorio.py
+            atender_usuario()                                       #Va a la funcion "atender_usuario" la cual esta dentro del modulo main.py
         if opcion == "4":                                           #Se verifica si es la opcion 2
-            consultorio.consultar_siguiente_usuario()               #Va a la funcion "consultar_siguiente_usuario" la cual esta dentro del modulo consultorio.py
+            consultar_usuario()                                     #Va a la funcion "consultar_siguiente_usuario" la cual esta dentro del modulo consultorio.py
         if opcion == "5":                                           #Se verifica si es la opcion 2
             consultorio.estadistica_de_usuarios()                   #Va a la funcion "estadistica_de_usuarios" la cual esta dentro del modulo consultorio.py
         if opcion == "6":                                           #Se verifica si es la opcion 2

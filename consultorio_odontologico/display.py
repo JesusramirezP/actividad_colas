@@ -49,3 +49,8 @@ def mostar_submenu_2():
 def mostrar_submenu_3():
     print("  1. Normal")                    #Solo información en terminal
     print("  2. Urgente")                   #Solo información en terminal
+
+def mostar_submenu_4():
+    print("  1. Urgente")                #Solo información en terminal 
+    print("  2. Extracciones")           #Solo información en terminal 
+    print("  3. General")                #Solo información en terminal
